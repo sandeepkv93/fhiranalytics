@@ -2,29 +2,29 @@ patient_map = new Map();
 fetched = false;
 ajaxcount = 0;
 
-condition_api = function(id) {
+condition_api = function (id) {
     console.log('Called');
     $.ajax({
         type: "GET",
-        url: "https://sb-fhir-stu3.smarthealthit.org/smartstu3/open/Condition?patient="+id+"&_count=10&_getpagesoffset=0",
+        url: "https://sb-fhir-stu3.smarthealthit.org/smartstu3/open/Condition?patient=" + id + "&_count=10&_getpagesoffset=0",
         headers: {
             Accept: "application/json; charset=utf-8"
         },
         success: function (result) {
             disorders = [];
-            if(result.total != 0) {
-                for(k = 0; k < result.entry.length; k++) {
+            if (result.total != 0) {
+                for (k = 0; k < result.entry.length; k++) {
                     d = result.entry[k].resource.code.text;
-                    if(d.indexOf('(disorder)') > -1) {
-                        d = d.substring(0,d.indexOf('(disorder)')-1);
+                    if (d.indexOf('(disorder)') > -1) {
+                        d = d.substring(0, d.indexOf('(disorder)') - 1);
                     }
-                    else if(d.indexOf('(situation)') > -1) {
-                        d = d.substring(0,d.indexOf('(situation)')-1);
+                    else if (d.indexOf('(situation)') > -1) {
+                        d = d.substring(0, d.indexOf('(situation)') - 1);
                     }
                     disorders.push(d);
                 }
                 o = patient_map.get(id);
-                if(o !== undefined)
+                if (o !== undefined)
                     o.disorders = disorders;
             }
         },
@@ -33,25 +33,26 @@ condition_api = function(id) {
         }
     });
 };
-function updateProgress(percentage){
-    if(percentage > 100) percentage = 100;
-    $('#progressBar').css('width', percentage+'%');
-    $('#progressBar').html(percentage+'%');
+
+function updateProgress(percentage) {
+    if (percentage > 100) percentage = 100;
+    $('#progressBar').css('width', percentage + '%');
+    $('#progressBar').html(percentage + '%');
 }
 
-patient_api = function(k) {
+patient_api = function (k) {
     $.ajax({
         type: "GET",
-        url: "https://sb-fhir-stu3.smarthealthit.org/smartstu3/open/Patient?_count=10&_getpagesoffset="+(k*10),
+        url: "https://sb-fhir-stu3.smarthealthit.org/smartstu3/open/Patient?_count=10&_getpagesoffset=" + (k * 10),
         headers: {
             Accept: "application/json; charset=utf-8"
         },
         success: function (result) {
             ajaxcount += 1;
             updateProgress(ajaxcount);
-            for(i=0;i<result.entry.length;i++) {
+            for (i = 0; i < result.entry.length; i++) {
                 p = result.entry[i];
-                if(patient_map.get(p.resource.id) === undefined) {
+                if (patient_map.get(p.resource.id) === undefined) {
                     patient_map.set(p.resource.id, {id: p.resource.id});
                     o = patient_map.get(p.resource.id);
                     o.name = p.resource.name[0].given + ' ' + p.resource.name[0].family;
@@ -84,11 +85,11 @@ patient_api = function(k) {
                     console.log('Already Present')
                 }
             }
-            if(ajaxcount == 100) {
+            if (ajaxcount == 100) {
                 fetched = true;
                 ajaxcount += 1;
             }
-            if(fetched) {
+            if (fetched) {
                 swal(
                     'Fetched',
                     'New FHIR Data is successfully fetched',
@@ -103,18 +104,18 @@ patient_api = function(k) {
     });
 };
 
-myFunction = function() {
+myFunction = function () {
     patient_map.clear();
     fetched = false;
     ajaxcount = 0;
     updateProgress(0);
-    for(m = 0; m < 100; m++) {
+    for (m = 0; m < 100; m++) {
         //patient_api(Math.floor(Math.random()*50));
         patient_api(m);
     }
 };
 
-initialFunc = function() {
+initialFunc = function () {
     var data = [{
         x: [],
         y: [],
@@ -124,8 +125,8 @@ initialFunc = function() {
     Plotly.newPlot('myDiv', []);
 };
 
-checkDataLoaded = function() {
-    if(patient_map.size == 0) {
+checkDataLoaded = function () {
+    if (patient_map.size == 0) {
         swal(
             'No Data Available',
             'Please click on \"Fetch FHIR Data\" button',

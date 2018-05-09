@@ -85,24 +85,36 @@
                 </div>
                 <br>
                 <select id="combination1" onclick="checkDataLoaded()">
-                    <option selected disabled>Parameter for X-Axis</option>
-                    <option value="1">Number of Patients Vs Disorders</option>
-                    <option value="2">Number of Asthma Patients Vs gender</option>
-                    <option value="3">Number of</option>
-                    <option value="4">Audi</option>
+                    <option selected disabled>Parameter for Y-Axis</option>
+                    <option value="1"># of Patients</option>
+                    <option value="2"># of Patients with Asthma</option>
+                    <option value="3"># of Patients with Diabetes</option>
+                    <option value="4"># of Patients with Alzheimer's disease</option>
+                    <option value="5"># of Patients with Cardiac Arrest</option>
+                    <option value="6"># of Patients with Drug overdose</option>
+                    <option value="7"># of Patients with Pneumonia</option>
+                    <option value="8"># of Patients with Childhood asthma</option>
+                    <option value="9"># of Patients with Hypertension</option>
+                    <option value="10"># of Patients with Viral sinusitis</option>
                 </select>
                 <br>
                 <br>
                 <select id="combination2" onclick="checkDataLoaded()">
-                    <option selected disabled>Parameter for Y-Axis</option>
-                    <option value="1">Number of Patients Vs Disorders</option>
-                    <option value="2">Number of Asthma Patients Vs gender</option>
-                    <option value="3">Number of</option>
-                    <option value="4">Audi</option>
+                    <option selected disabled>Parameter for X-Axis</option>
+                    <option value="1">Disorders</option>
+                    <option value="2">Gender</option>
+                    <option value="3">Age Group</option>
+                    <option value="4">Birth City</option>
+                    <option value="5">Birth State</option>
+                    <option value="6">Marital Status</option>
+                    <option value="7">Current City</option>
+                    <option value="8">Current State</option>
+                    <option value="9">Race</option>
+                    <option value="10">Ethnicity</option>
                 </select>
                 <br>
                 <br>
-                <button type="button" onclick=plotGraph()  class="btn btn-primary btn-lg">Plot the Graph</button>
+                <button type="button" onclick=plotGraph() class="btn btn-primary btn-lg">Plot the Graph</button>
             </div>
             <div class="w3-twothird">
 
@@ -121,6 +133,7 @@
             overlayBg.style.display = "block";
         }
     }
+
     function w3_close() {
         mySidebar.style.display = "none";
         overlayBg.style.display = "none";
